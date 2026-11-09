@@ -28,14 +28,26 @@ jobs:
       - name: Restore signing key
         env:
           KEYSTORE_B64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         run: |
-          if [ -n "$KEYSTORE_B64" ]; then
-            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
-            echo "SIGNING_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
-            echo "Подпись: личный ключ из секретов"
-          else
+          if [ -z "$KEYSTORE_B64" ]; then
             echo "::warning::Секрет SIGNING_KEYSTORE_BASE64 не задан — APK подписан отладочным ключом. Обновление поверх прошлой версии может не установиться."
+            exit 0
           fi
+          # Убираем пробелы и переносы строк, которые могли попасть при копировании.
+          printf '%s' "$KEYSTORE_B64" | tr -d ' \r\n\t' > "$RUNNER_TEMP/ks.b64"
+          echo "Длина base64 после очистки: $(wc -c < "$RUNNER_TEMP/ks.b64") символов (ожидается 5736)"
+          if ! base64 -d "$RUNNER_TEMP/ks.b64" > "$RUNNER_TEMP/release.jks"; then
+            echo "::error::Секрет SIGNING_KEYSTORE_BASE64 повреждён: вставьте заново ВСЁ содержимое keystore-base64.txt (одна строка, 5736 символов)."
+            exit 1
+          fi
+          if ! keytool -list -keystore "$RUNNER_TEMP/release.jks" -storetype PKCS12 -storepass "$SIGNING_STORE_PASSWORD" -alias "$SIGNING_KEY_ALIAS" > /dev/null 2>&1; then
+            echo "::error::Ключ не открывается: проверьте секреты SIGNING_STORE_PASSWORD и SIGNING_KEY_ALIAS (без пробелов и кавычек) и что keystore-base64.txt скопирован целиком."
+            exit 1
+          fi
+          echo "SIGNING_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          echo "Подпись: личный ключ из секретов — OK"
 
       - name: Unit tests (core)
         run: gradle --no-daemon :core:test
