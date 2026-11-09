@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Цвета интерфейса задаются в коде (ui/Ui.kt); тема только убирает системную шапку
+         и задаёт фон до первой отрисовки, чтобы не было белой вспышки. -->
+    <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/bg_start</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+    <color name="bg_start">#FF0F1115</color>
+    <color name="accent">#FF8B97FF</color>
+    <color name="ic_bg">#FF20242D</color>
+</resources>

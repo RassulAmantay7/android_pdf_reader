@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Иконка: лист с загнутым углом и строками текста. Холст 108x108, безопасная зона 66x66 в центре. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#FF8B97FF"
+        android:pathData="M38,30 L62,30 L72,40 L72,78 Q72,80 70,80 L38,80 Q36,80 36,78 L36,32 Q36,30 38,30 Z" />
+    <path android:fillColor="#FFB7C0FF" android:pathData="M62,30 L62,40 L72,40 Z" />
+    <path android:fillColor="#FF20242D" android:pathData="M42,48 L66,48 L66,51 L42,51 Z" />
+    <path android:fillColor="#FF20242D" android:pathData="M42,56 L66,56 L66,59 L42,59 Z" />
+    <path android:fillColor="#FF20242D" android:pathData="M42,64 L58,64 L58,67 L42,67 Z" />
+</vector>
