@@ -277,3 +277,7 @@ FR-1…5 → S0.1, R4.1 · FR-6…9 → C2.3, R4.3 · FR-10…17 → R4.2, R4.4,
 - Compose BOM: https://developer.android.com/develop/ui/compose/bom
 - Версии androidx: https://developer.android.com/jetpack/androidx/versions
 - Kotlin 2.4.20: https://blog.jetbrains.com/kotlin/2026/09/kotlin-2-4-20-released/
+
+---
+## Изменения после одобрения (главная сессия, 2026-11-09)
+Пользователь выбрал «Одобряю, но быстрее»: сразу полная v1, проверка на телефоне в конце. Технические отклонения (View вместо Compose, версии AGP 8.7.3 / Kotlin 2.0.21 / SDK 35, путь «С» для пометок, локальная компиляция) — см. `docs/contracts.md`.
